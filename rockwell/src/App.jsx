@@ -6,13 +6,17 @@ import Register from "./pages/auth/Register";
 import UserContextProvider from "./context/UserContext";
 
 const HomePage = lazy(() => import("./pages/home/index"));
-const ReviewPage = lazy(() => import("./pages/review/Review"));
+const ReviewPage = lazy(() => import("./pages/summarizer/Review"));
 const DeptPage = lazy(() => import("./pages/department/Department"));
 const UsersPage = lazy(() => import("./pages/users/Users"));
 const HistoryPage = lazy(() => import("./pages/history/History"));
+const Notadmin = lazy(() => import("./pages/Notadmin/Notadmin"));
 
 const App = () => {
   const user = localStorage.getItem("userInfo");
+  const isAdmin = () => {
+    return JSON.parse(user)?.role === "admin";
+  };
 
   return (
     <UserContextProvider>
@@ -21,7 +25,15 @@ const App = () => {
           {user ? (
             <Route path="/" element={<Layout />}>
               <Route path="/home" element={<HomePage />} />
-              <Route path="/review" element={<ReviewPage />} />
+              <Route path="/NotAdmin" element={<Notadmin />} />
+              {isAdmin() ? (
+                <Route path="/review" element={<ReviewPage />} />
+              ) : (
+                <Route
+                  path="/review"
+                  element={<Navigate to="/NotAdmin" replace />}
+                />
+              )}
               <Route path="/department" element={<DeptPage />} />
               <Route path="/users" element={<UsersPage />} />
               <Route path="/history" element={<HistoryPage />} />

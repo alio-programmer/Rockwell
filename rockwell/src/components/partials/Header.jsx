@@ -27,6 +27,11 @@ const Header = ({ setOpen, open }) => {
     window.location.reload();
   };
 
+  const clearsummary = () => {
+    localStorage.removeItem("summary");
+    window.location.reload();
+  };
+
   const userName = userInfo?.username;
   const logout = async () => {
     // setUserInfo(null)
@@ -67,7 +72,13 @@ const Header = ({ setOpen, open }) => {
               className=" bg-slate-200 p-2 rounded-lg text-sm shadow-md hover:scale-105 transition-transform"
               onClick={clearchat}
             >
-              Clearchat
+              Clear Chat
+            </button>
+            <button
+              className=" bg-slate-200 p-2 rounded-lg text-sm shadow-md hover:scale-105 transition-transform"
+              onClick={clearsummary}
+            >
+              Clear Summary
             </button>
             {userName ? (
               <div>
